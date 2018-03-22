@@ -1,0 +1,12 @@
+$serverConfigName=vfcSolrServerConfig
+$backofficeServerConfigName=	standalone-Backoffice
+
+REMOVE SolrEndpointUrl;solrServerConfig(name)[unique=true]
+;$serverConfigName
+;$backofficeServerConfigName
+
+INSERT_UPDATE SolrEndpointUrl;solrServerConfig(name)[unique=true];url[unique=true];master[unique=true,default=false]
+;$serverConfigName;http://vfc-p-ma-srch-001:8983/solr;true
+;$serverConfigName;http://vfc-p-ma-srch-002:8983/solr;false
+;$backofficeServerConfigName;http://vfc-p-ma-srch-001:8983/solr;true
+;$backofficeServerConfigName;http://vfc-p-ma-srch-002:8983/solr;false

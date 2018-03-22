@@ -1,0 +1,73 @@
+<project name="hybris_framework" default="all">
+  <!-- varables -->
+	<property name="framework.dir" value="framework"/>
+	<property name="framework.config.dir" value="config"/>
+	<property name="framework.dbdrivers.dir" value="${framework.dir}/resources/dbdrivers"/>
+	<property name="hybris.version" value="6.6"/>
+	<property name="hybris.home" value="hybris/bin/platform"/>
+	<property name="hybris.config.dir" value="hybris/config"/>
+	<property name="build.environment" value="local"/>
+
+
+	<!-- 3rd party libs -->
+	<taskdef name="groovy" classname="org.codehaus.groovy.ant.Groovy" classpath="${framework.dir}/lib/groovy-all-1.8.0.jar" />
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="${framework.dir}/lib/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+
+
+	<!-- ant macros -->
+	<import file="${framework.dir}/resources/antmacros/pmd.xml" />
+	
+
+    <target name="config">
+		<groovy src="${framework.dir}/resources/groovyscripts/config.groovy" />
+	</target>
+
+
+	<target name="all" depends="config" description="build and deploy">
+		<ant dir="hybris/bin/platform" target="all" inheritrefs="true" />
+	</target>
+
+	<target name="build" depends="config" description="build">
+		<ant dir="hybris/bin/platform" target="build" inheritrefs="true" />
+	</target>
+
+	<target name="clean" depends="config" description="clean platform and all extensions">
+		<ant dir="hybris/bin/platform" target="clean" inheritrefs="true" />
+	</target>
+
+	<target name="updatesystem" description="Performs an update system on master tenant and loads essential and fixture data">
+		<ant dir="hybris/bin/platform" target="updatesystem" inheritrefs="true">
+			<property name="tenant" value="master" />
+		</ant>
+	</target>
+
+	<target name="junitinit" description="Initializes JUnit tenant">
+		<property name="tenant" value="junit" />
+		<ant dir="hybris/bin/platform" target="yunitinit" inheritrefs="true" />
+	</target>
+
+	<target name="initialize" description="Initialize the hybris system and loads all necessary data">
+		<ant dir="hybris/bin/platform" target="initialize" inheritall="true">
+			<property name="tenant" value="master" />
+		</ant>
+	</target>
+
+	<target name="test" description="runs tests">
+		<ant dir="hybris/bin/platform" target="alltests" inheritrefs="true" />
+	</target>
+
+	<target name="webtests" description="runs junit web tests (web/testsrc)">
+		<ant dir="hybris/bin/platform" target="allwebtests" inheritrefs="true" />
+	</target>
+	
+	<target name="installDBDrivers" description="Installs DB Drivers">
+		<copy todir="hybris/bin/platform/lib/dbdriver" overwrite="true" failonerror="true">
+			<fileset dir="${framework.dbdrivers.dir}" includes="*.jar" />
+		</copy>
+	</target>
+
+</project>

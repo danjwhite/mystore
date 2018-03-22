@@ -1,0 +1,13 @@
+<FindBugsFilter>
+     <Match>
+       <Package name="com.dcc.hybris.core.jalo.*" />
+     </Match>
+     <Match>
+     	<Class name="com.dcc.hybris.core.GeneratedDCCVariantProduct" />
+     </Match>
+     <Match>
+     	<Class name="com.dcc.hybris.cockpits.cmscockpit.sitewizard.AcceleratorWizardHelper" />
+     	<Method name="createSamplePages" />
+     </Match>
+</FindBugsFilter>
+

@@ -1,0 +1,12 @@
+$serverConfigName=vfcSolrServerConfig
+$backofficeServerConfigName=standalone-Backoffice
+
+REMOVE SolrEndpointUrl;solrServerConfig(name)[unique=true]
+;$serverConfigName
+;$backofficeServerConfigName
+
+INSERT_UPDATE SolrEndpointUrl;solrServerConfig(name)[unique=true];url[unique=true];master[unique=true,default=false]
+;$serverConfigName;http://vfc-s-ma-srch-001.hybrishosting.com:8983/solr;true
+;$serverConfigName;http://vfc-s-ma-srch-002.hybrishosting.com:8983/solr;false
+;$backofficeServerConfigName;http://vfc-s-ma-srch-001.hybrishosting.com:8983/solr;true
+;$backofficeServerConfigName;http://vfc-s-ma-srch-002.hybrishosting.com:8983/solr;false
